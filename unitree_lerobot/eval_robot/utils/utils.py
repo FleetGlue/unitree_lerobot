@@ -121,6 +121,10 @@ class EvalRealConfig:
     episodes: int = 0
     frequency: float = 30.0
 
+    # FleetGlue: make_robot.py:77 references args.image_host but upstream EvalRealConfig
+    # forgot to define it. Default to PC2's IP on the robot net.
+    image_host: str = "192.168.123.164"
+
     # Basic control parameters
     arm: str = "G1_29"  # G1_29, G1_23
     ee: str = "dex3"  # dex3, dex1, inspire1, brainco

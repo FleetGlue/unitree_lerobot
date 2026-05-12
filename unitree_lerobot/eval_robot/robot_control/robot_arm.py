@@ -1,3 +1,4 @@
+import os
 import numpy as np
 import threading
 import time
@@ -90,9 +91,9 @@ class G1_29_ArmController:
 
         # initialize lowcmd publisher and lowstate subscriber
         if self.simulation_mode:
-            ChannelFactoryInitialize(1)
+            ChannelFactoryInitialize(1, os.environ.get("G1_NET_IFACE"))
         else:
-            ChannelFactoryInitialize(0)
+            ChannelFactoryInitialize(0, os.environ.get("G1_NET_IFACE"))
 
         if self.motion_mode:
             self.lowcmd_publisher = ChannelPublisher(kTopicLowCommand_Motion, hg_LowCmd)
@@ -381,9 +382,9 @@ class G1_23_ArmController:
 
         # initialize lowcmd publisher and lowstate subscriber
         if self.simulation_mode:
-            ChannelFactoryInitialize(1)
+            ChannelFactoryInitialize(1, os.environ.get("G1_NET_IFACE"))
         else:
-            ChannelFactoryInitialize(0)
+            ChannelFactoryInitialize(0, os.environ.get("G1_NET_IFACE"))
 
         if self.motion_mode:
             self.lowcmd_publisher = ChannelPublisher(kTopicLowCommand_Motion, hg_LowCmd)
@@ -663,9 +664,9 @@ class H1_2_ArmController:
 
         # initialize lowcmd publisher and lowstate subscriber
         if self.simulation_mode:
-            ChannelFactoryInitialize(1)
+            ChannelFactoryInitialize(1, os.environ.get("G1_NET_IFACE"))
         else:
-            ChannelFactoryInitialize(0)
+            ChannelFactoryInitialize(0, os.environ.get("G1_NET_IFACE"))
         self.lowcmd_publisher = ChannelPublisher(kTopicLowCommand_Debug, hg_LowCmd)
         self.lowcmd_publisher.Init()
         self.lowstate_subscriber = ChannelSubscriber(kTopicLowState, hg_LowState)
@@ -939,9 +940,9 @@ class H1_ArmController:
 
         # initialize lowcmd publisher and lowstate subscriber
         if self.simulation_mode:
-            ChannelFactoryInitialize(1)
+            ChannelFactoryInitialize(1, os.environ.get("G1_NET_IFACE"))
         else:
-            ChannelFactoryInitialize(0)
+            ChannelFactoryInitialize(0, os.environ.get("G1_NET_IFACE"))
         self.lowcmd_publisher = ChannelPublisher(kTopicLowCommand_Debug, go_LowCmd)
         self.lowcmd_publisher.Init()
         self.lowstate_subscriber = ChannelSubscriber(kTopicLowState, go_LowState)

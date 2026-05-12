@@ -217,6 +217,9 @@ def create_empty_dataset(
 ) -> LeRobotDataset:
     motors = ROBOT_CONFIGS[robot_type].motors
     cameras = ROBOT_CONFIGS[robot_type].cameras
+    # FleetGlue: read image shape from config (defaults to (480, 640, 3) on configs that
+    # don't set it explicitly, matching pre-FleetGlue behavior).
+    image_shape = getattr(ROBOT_CONFIGS[robot_type], "image_shape", (480, 640, 3))
 
     features = {
         "observation.state": {
@@ -256,7 +259,7 @@ def create_empty_dataset(
     for cam in cameras:
         features[f"observation.images.{cam}"] = {
             "dtype": mode,
-            "shape": (480, 640, 3),
+            "shape": tuple(image_shape),
             "names": [
                 "height",
                 "width",
