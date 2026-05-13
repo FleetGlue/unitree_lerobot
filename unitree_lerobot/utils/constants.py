@@ -505,7 +505,9 @@ G1_EDU_PLUS_FLEETGLUE_STEREO_CONFIG = RobotConfig(
     camera_to_image_key={"color_0": "cam_head_left", "color_1": "cam_head_right"},
     json_state_data_name=["left_arm.qpos", "right_arm.qpos", "body.qpos"],
     json_action_data_name=["left_arm.qpos", "right_arm.qpos", "body.qpos"],
-    image_shape=(480, 320, 3),
+    # Each stereo half is 640 wide after the issue-0008 split fix (D435i IR-stereo produces
+    # a 1280×480 source frame which is split symmetrically).
+    image_shape=(480, 640, 3),
 )
 
 
