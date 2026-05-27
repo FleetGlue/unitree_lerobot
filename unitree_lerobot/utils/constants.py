@@ -511,6 +511,26 @@ G1_EDU_PLUS_FLEETGLUE_STEREO_CONFIG = RobotConfig(
 )
 
 
+# FleetGlue stereo, no-waist: identical to the _Stereo config but drops the 3 waist motors
+# and the body.qpos field in state/action. Use this when teleop ran WITHOUT --head-tracking
+# (e.g., the g1-teleop-record-pushv1 alias which intentionally drops waist control for
+# single-arm tasks like hat-push v1). The recorded data.json then has only left_arm.qpos +
+# right_arm.qpos (14 dims total), so the converter must produce a 14-dim state/action vector.
+G1_EDU_PLUS_FLEETGLUE_STEREO_NOWAIST_CONFIG = RobotConfig(
+    motors=[
+        "kLeftShoulderPitch","kLeftShoulderRoll","kLeftShoulderYaw","kLeftElbow",
+        "kLeftWristRoll","kLeftWristPitch","kLeftWristYaw",
+        "kRightShoulderPitch","kRightShoulderRoll","kRightShoulderYaw","kRightElbow",
+        "kRightWristRoll","kRightWristPitch","kRightWristYaw",
+    ],
+    cameras=["cam_head_left", "cam_head_right"],
+    camera_to_image_key={"color_0": "cam_head_left", "color_1": "cam_head_right"},
+    json_state_data_name=["left_arm.qpos", "right_arm.qpos"],
+    json_action_data_name=["left_arm.qpos", "right_arm.qpos"],
+    image_shape=(480, 640, 3),
+)
+
+
 ROBOT_CONFIGS = {
     "Unitree_Z1_Single": Z1_SINGLE_CONFIG,
     "Unitree_Z1_Dual": Z1_CONFIG,
@@ -527,4 +547,6 @@ ROBOT_CONFIGS = {
     "Unitree_G1_EDU_Plus_FleetGlue": G1_EDU_PLUS_FLEETGLUE_CONFIG,
     # FleetGlue stereo variant — for IR-stereo head cam mode (cam_head_left + cam_head_right, 480x320 each).
     "Unitree_G1_EDU_Plus_FleetGlue_Stereo": G1_EDU_PLUS_FLEETGLUE_STEREO_CONFIG,
+    # FleetGlue stereo no-waist — for recordings made without --head-tracking (e.g. hat-push v1).
+    "Unitree_G1_EDU_Plus_FleetGlue_Stereo_NoWaist": G1_EDU_PLUS_FLEETGLUE_STEREO_NOWAIST_CONFIG,
 }
